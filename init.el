@@ -101,6 +101,12 @@
 ;; Using spaces instead of tabs for indentation
 (setq-default indent-tabs-mode nil)
 
+;; Don't warn for large files
+(setq large-file-warning-threshold nil)
+
+;; Don't warn for following symlinks
+(setq vc-follow-symlinks t)
+
 ;; Set line numbers
 (column-number-mode)
 (setq display-line-numbers-type 'relative)
@@ -112,7 +118,9 @@
                 vterm-mode-hook
                 shell-mode-hook
                 eshell-mode-hook
-                dired-mode-hook))
+                dired-mode-hook
+                geiser-repl-mode-hook
+                sly-mrepl-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; Scrolling like vim
@@ -148,13 +156,15 @@
 (defun td/set-font-faces ()
   (message "Setting font faces!")
   ;; Set font
-  (set-face-attribute 'default nil :font "MapleMono Nerd Font" :height 190)
+  (set-face-attribute 'default nil :font "MapleMono Nerd Font" :height 190 :weight 'semi-bold)
 
   ;; Set fixed pitch face
-  (set-face-attribute 'fixed-pitch nil :font "MapleMono Nerd Font" :height 190)
+  (set-face-attribute 'fixed-pitch nil :font "MapleMono Nerd Font" :height 190 :weight 'semi-bold)
 
   ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil :font "MapleMono Nerd Font" :height 190))
+  (set-face-attribute 'variable-pitch nil :font "MapleMono Nerd Font" :height 190 :weight 'semi-bold)
+  (make-face-unitalic 'line-number)
+  (make-face-unitalic 'line-number-current-line))
 
 
 ;; Fix fonts when running emacsclient (in daemon)
@@ -172,7 +182,8 @@
   ;; Enable all ligatures in all modes
   (ligature-set-ligatures 't '("<>" "|>" "<|" "==" "===" "<=" ">=" "->"
                                "<-" "-->" "<--" "==>" "<==" "=>" "||" "&&"
-                               "!=" "<->" "<~" "~>" "~~" "<=>" "<<" ">>"))
+                               "!=" "<->" "<~" "~>" "~~" "<=>" "<<" ">>"
+                               "..."))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
@@ -182,22 +193,11 @@
 
 
 ;;;; THEME
-(use-package spaceway-theme
-  :ensure nil
-  :load-path "lisp/spaceway/"
-  :config
-  (when td/my-system
-    (add-to-list 'default-frame-alist '(background-color . "black")))
-  (load-theme 'spaceway t)
-  (setenv "SCHEME" "dark"))
-
 (use-package doom-themes
-  :disabled t
   :ensure t
   :config
-  (load-theme 'doom-earl-grey t)
-  (set-face-attribute 'default nil :foreground "#333")
-  (setenv "SCHEME" "light"))
+  (load-theme 'doom-homage-black t)
+  (setenv "SCHEME" "homage"))
 
 ;; Make sure to run (nerd-icons-install-fonts) and (all-the-icons-install-fonts)
 ;; one time after installing the package
@@ -378,6 +378,14 @@
   :config
   (setq inferior-lisp-program "/usr/bin/sbcl"))
 
+(use-package scheme
+  :ensure t
+  :mode "\\.sld\\'")
+
+(use-package geiser-guile
+  :ensure t
+  :mode "\\.scm\\'")
+
 (use-package paren-face
   :ensure t
   :hook ((prog-mode eshell-mode
@@ -396,7 +404,7 @@
   :ensure t :defer t :mode "\\.go\\'")
 
 (use-package yaml-mode
-  :ensure t :mode "\\.yml\\'")
+  :ensure t :mode "\\.ya?ml\\'")
 
 (add-hook 'sh-mode-hook
   (lambda () (setq sh-basic-offset 2)))
@@ -544,19 +552,6 @@
 (use-package simple-httpd
   :ensure t)
 
-;; IRC
-(setq erc-server "irc.libera.chat"
-      erc-port 6697
-      erc-nick "tdback"
-      erc-user-full-name "Tyler Dback"
-      erc-track-shorten-start 8
-      ;; Kill buffer when leaving channel
-      erc-kill-buffer-on-part t
-      ;; Bury buffer from any /msg
-      erc-auto-query 'bury
-      erc-fill-column 120
-      erc-fill-function 'erc-fill-static
-      erc-fill-static-center 20)
 
 ;; Make gc pauses faster by decreasing the threshold
 (setq gc-cons-threshold (* 2 1000 1000))
