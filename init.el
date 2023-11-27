@@ -156,13 +156,13 @@
 (defun td/set-font-faces ()
   (message "Setting font faces!")
   ;; Set font
-  (set-face-attribute 'default nil :font "MapleMono Nerd Font" :height 180 :weight)
+  (set-face-attribute 'default nil :font "MapleMono Nerd Font" :height 200)
 
   ;; Set fixed pitch face
-  (set-face-attribute 'fixed-pitch nil :font "MapleMono Nerd Font" :height 180 :weight)
+  (set-face-attribute 'fixed-pitch nil :font "MapleMono Nerd Font" :height 200)
 
   ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil :font "MapleMono Nerd Font" :height 180 :weight))
+  (set-face-attribute 'variable-pitch nil :font "MapleMono Nerd Font" :height 200))
 
 
 ;; Fix fonts when running emacsclient (in daemon)
