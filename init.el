@@ -156,15 +156,13 @@
 (defun td/set-font-faces ()
   (message "Setting font faces!")
   ;; Set font
-  (set-face-attribute 'default nil :font "MapleMono Nerd Font" :height 190 :weight 'semi-bold)
+  (set-face-attribute 'default nil :font "MapleMono Nerd Font" :height 180 :weight)
 
   ;; Set fixed pitch face
-  (set-face-attribute 'fixed-pitch nil :font "MapleMono Nerd Font" :height 190 :weight 'semi-bold)
+  (set-face-attribute 'fixed-pitch nil :font "MapleMono Nerd Font" :height 180 :weight)
 
   ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil :font "MapleMono Nerd Font" :height 190 :weight 'semi-bold)
-  (make-face-unitalic 'line-number)
-  (make-face-unitalic 'line-number-current-line))
+  (set-face-attribute 'variable-pitch nil :font "MapleMono Nerd Font" :height 180 :weight))
 
 
 ;; Fix fonts when running emacsclient (in daemon)
@@ -180,10 +178,9 @@
 (use-package ligature
   :config
   ;; Enable all ligatures in all modes
-  (ligature-set-ligatures 't '("<>" "|>" "<|" "==" "===" "<=" ">=" "->"
-                               "<-" "-->" "<--" "==>" "<==" "=>" "||" "&&"
-                               "!=" "<->" "<~" "~>" "~~" "<=>" "<<" ">>"
-                               "..."))
+  (ligature-set-ligatures 't '("<>" "==" "===" "<=" ">=" "->" "<-" "-->"
+                               "==>" "<==" "=>" "||" "&&" "!=" "<->" "~~"
+                               "<=>" "<<" ">>" "..."))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
@@ -193,11 +190,22 @@
 
 
 ;;;; THEME
+(use-package spaceway-theme
+  :ensure nil
+  :load-path "lisp/spaceway/"
+  :config
+  (when td/my-system
+    (add-to-list 'default-frame-alist '(background-color . "black")))
+  (load-theme 'spaceway t)
+  (setenv "SCHEME" "dark"))
+
 (use-package doom-themes
+  :disabled t
   :ensure t
   :config
-  (load-theme 'doom-homage-black t)
-  (setenv "SCHEME" "homage"))
+  (load-theme 'doom-earl-grey t)
+  (set-face-attribute 'default nil :foreground "#333")
+  (setenv "SCHEME" "light"))
 
 ;; Make sure to run (nerd-icons-install-fonts) and (all-the-icons-install-fonts)
 ;; one time after installing the package
@@ -205,7 +213,8 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 10)))
+  :custom
+  (doom-modeline-height 10))
 
 (use-package all-the-icons)
 
