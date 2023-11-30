@@ -139,7 +139,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Set mouse-pointer to disappear when typing
-(setq make-pointer-invisible t) ;; Edit this
+(setq make-pointer-invisible t)
 
 ;; Let the desktop background show through
 ;; Note: This only works with a compositor such as picom
@@ -156,13 +156,13 @@
 (defun td/set-font-faces ()
   (message "Setting font faces!")
   ;; Set font
-  (set-face-attribute 'default nil :font "MapleMono Nerd Font" :height 200)
+  (set-face-attribute 'default nil :font "FantasqueSansM Nerd Font" :height 220)
 
   ;; Set fixed pitch face
-  (set-face-attribute 'fixed-pitch nil :font "MapleMono Nerd Font" :height 200)
+  (set-face-attribute 'fixed-pitch nil :font "FantasqueSansM Nerd Font" :height 220)
 
   ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil :font "MapleMono Nerd Font" :height 200))
+  (set-face-attribute 'variable-pitch nil :font "FantasqueSansM Nerd Font" :height 220))
 
 
 ;; Fix fonts when running emacsclient (in daemon)
@@ -180,7 +180,7 @@
   ;; Enable all ligatures in all modes
   (ligature-set-ligatures 't '("<>" "==" "===" "<=" ">=" "->" "<-" "-->"
                                "==>" "<==" "=>" "||" "&&" "!=" "<->" "~~"
-                               "<=>" "<<" ">>" "..."))
+                               "~>" "<~" "<=>" "<<" ">>"))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
@@ -387,19 +387,19 @@
   :config
   (setq inferior-lisp-program "/usr/bin/sbcl"))
 
-(use-package scheme
+(use-package geiser
   :ensure t
-  :mode "\\.sld\\'")
-
-(use-package geiser-guile
-  :ensure t
-  :mode "\\.scm\\'")
+  :config
+  (setq geiser-guile-binary "/usr/bin/guile"
+        geiser-active-implementations '(guile)
+        geiser-default-implementations '(guile))
+  (use-package geiser-guile))
 
 (use-package paren-face
   :ensure t
   :hook ((prog-mode eshell-mode
                     inferior-lisp-mode inferior-emacs-lisp-mode
-                    lisp-interaction-mode sly-mrepl-mode)
+                    lisp-interaction-mode sly-mrepl-mode scheme-mode)
          . paren-face-mode))
 
 (use-package python-mode
