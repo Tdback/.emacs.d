@@ -130,7 +130,7 @@
   (setq org-capture-templates
         '(("t" "Tasks / Projects")
           ("tt" "New Task" entry (file+olp "~/OrgFiles/tasks.org" "Tasks")
-           "* TODO %?\n %U\n %a\n %i" :empty-lines 1)
+           "* TODO %?\n %i" :empty-lines 1)
 
           ("i" "Idea / Thought")
           ("ii" "New Idea" entry (file+olp "~/OrgFiles/ideas.org" "Ideas")
@@ -142,9 +142,6 @@
            "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
            :clock-in :clock-resume
            :empty-lines 1)))
-
-  (define-key global-map (kbd "C-c j")
-    (lambda () (interactive) (org-capture)))
 
   (td/org-font-setup))
 
@@ -270,3 +267,14 @@
   ((org-present-mode . td/org-present-start)
    (org-present-mode-quit . td/org-present-end)
    (org-present-after-navigate-functions . td/org-present-prepare-slide)))
+
+(use-package org-appear :after org
+  :ensure t
+  :custom
+  (org-hide-emphasis-markers t)
+  (org-appear-autolinks t)
+  (org-appear-inside-latex t)
+  (org-appear-autoentities t)
+  (org-appear-autosubmarkers t)
+  :config
+  (add-hook 'org-mode-hook 'org-appear-mode))
