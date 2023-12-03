@@ -156,13 +156,13 @@
 (defun td/set-font-faces ()
   (message "Setting font faces!")
   ;; Set font
-  (set-face-attribute 'default nil :font "FantasqueSansM Nerd Font" :height 220)
+  (set-face-attribute 'default nil :font "Iosevka Nerd Font" :height 210)
 
   ;; Set fixed pitch face
-  (set-face-attribute 'fixed-pitch nil :font "FantasqueSansM Nerd Font" :height 220)
+  (set-face-attribute 'fixed-pitch nil :font "Iosevka Nerd Font" :height 210)
 
   ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil :font "FantasqueSansM Nerd Font" :height 220))
+  (set-face-attribute 'variable-pitch nil :font "Iosevka Nerd Font" :height 210))
 
 
 ;; Fix fonts when running emacsclient (in daemon)
@@ -178,15 +178,16 @@
 (use-package ligature
   :config
   ;; Enable all ligatures in all modes
-  (ligature-set-ligatures 't '("<>" "==" "===" "<=" ">=" "->" "<-" "-->"
-                               "==>" "<==" "=>" "||" "&&" "!=" "<->" "~~"
-                               "~>" "<~" "<=>" "<<" ">>"))
+  (ligature-set-ligatures 't '("<>" "==" "===" "<=" ">=" "->" "<-"
+                               "-->" "<--" "<->" "==>" "<==" "=>" "<=>"
+                               "||" "&&" "!=" "~>" "<~" "<<" ">>"))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
 
 (add-hook 'emacs-lisp-mode-hook 'prettify-symbols-mode)
 (add-hook 'lisp-mode-hook 'prettify-symbols-mode)
+(add-hook 'scheme-mode-hook 'prettify-symbols-mode)
 
 
 ;;;; THEME
@@ -214,7 +215,9 @@
   :ensure t
   :init (doom-modeline-mode 1)
   :custom
-  (doom-modeline-height 10))
+  (doom-modeline-height 10)
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-modal-icon nil))
 
 (use-package all-the-icons)
 
@@ -319,6 +322,14 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
+;; Enable "workspaces" in Emacs
+(use-package perspective
+  :ensure t  ; use `:straight t` if using straight.el!
+  :bind (("C-x k" . persp-kill-buffer*))
+  :custom
+  (persp-mode-prefix-key (kbd "C-x x"))
+  :init
+  (persp-mode))
 
 ;;;; COMPLETION
 (use-package eglot
