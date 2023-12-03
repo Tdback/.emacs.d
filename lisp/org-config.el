@@ -49,7 +49,7 @@
         org-log-into-drawer t)
 
   (setq org-agenda-files
-        '("~/OrgFiles/tasks.org"))
+        '("~/Documents/OrgFiles/tasks.org"))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
@@ -129,16 +129,16 @@
 
   (setq org-capture-templates
         '(("t" "Tasks / Projects")
-          ("tt" "New Task" entry (file+olp "~/OrgFiles/tasks.org" "Tasks")
+          ("tt" "New Task" entry (file+olp "~/Documents/OrgFiles/tasks.org" "Tasks")
            "* TODO %?\n %i" :empty-lines 1)
 
           ("i" "Idea / Thought")
-          ("ii" "New Idea" entry (file+olp "~/OrgFiles/ideas.org" "Ideas")
+          ("ii" "New Idea" entry (file+olp "~/Documents/OrgFiles/ideas.org" "Ideas")
            "* %^{Idea}\n %U\n %?\n %i" :empty-lines 1)
 
           ("j" "Journal Entries")
           ("jj" "Journal" entry
-           (file+olp+datetree "~/OrgFiles/journal.org")
+           (file+olp+datetree "~/Documents/OrgFiles/journal.org")
            "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
            :clock-in :clock-resume
            :empty-lines 1)))
@@ -188,16 +188,16 @@
 (use-package org-roam
   :ensure t
   :custom
-  (org-roam-directory "~/RoamNotes")
+  (org-roam-directory "~/Documents/RoamNotes")
   (org-roam-dailies-directory "daily/")
   (org-roam-completion-everywhere t)
   (org-roam-capture-templates
    '(("d" "default" plain
-      (file "~/RoamNotes/templates/default_capture_template.org")
+      (file "~/Documents/RoamNotes/templates/default_capture_template.org")
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
       :unnarrowed t)
      ("l" "programming language" plain
-      (file "~/RoamNotes/templates/programming_language_template.org")
+      (file "~/Documents/RoamNotes/templates/programming_language_template.org")
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
       :unnarrowed t)
      ("b" "book notes" plain
@@ -205,16 +205,16 @@
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
       :unnarrowed t)
      ("c" "chapter notes" plain
-      (file "~/RoamNotes/templates/chapter_note_template.org")
+      (file "~/Documents/RoamNotes/templates/chapter_note_template.org")
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
       :unnarrowed t)
      ("n" "course notes" plain
-      (file "~/RoamNotes/templates/course_note_template.org")
+      (file "~/Documents/RoamNotes/templates/course_note_template.org")
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
       :unnarrowed t)))
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
-      (file "~/RoamNotes/templates/daily_capture_template.org")
+      (file "~/Documents/RoamNotes/templates/daily_capture_template.org")
       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
       :empty-lines-before 1)))
   :bind (("C-c n l" . org-roam-buffer-toggle)
